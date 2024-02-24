@@ -30,6 +30,7 @@ int main(){
     createPage();
     createPhysicalMemory();
 
+    // size_t total_size = malloc_usable_size(physical_memory[0]);
 
     // printf("%zu", total_size);
     return 0;
