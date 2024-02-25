@@ -1,0 +1,100 @@
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
+Hello, this is a sample input file.
+It contains multiple lines of text.
+Each line has various characters, including upper and lower case.
+This is just an example to demonstrate reading and converting to uppercase.
+The output should be written to a different file.
