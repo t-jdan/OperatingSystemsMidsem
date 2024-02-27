@@ -80,7 +80,9 @@ int main(){
 
     int tlbHits = 0, tlbMisses = 0;
 
+    // why 1000?
     for (int i = 0; i < 1000; i++) {
+        // take a random virtual address
         int virtualAddress = rand() % VIRTUAL_SIZE;
 
         // Check if the virtual address is valid
@@ -152,7 +154,7 @@ int main(){
 
 
 
-
+// translats virtual address to physical address and calculates hits and misses
 int translateAddress(PageTable* masterPageTable, TLB* tlb, int virtualAddress, int* tlbHits, int* tlbMisses) {
 
     int masterIndex = virtualAddress / (PAGE_NUM * PAGE_SIZE);
