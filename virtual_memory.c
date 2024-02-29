@@ -9,6 +9,9 @@
 // #define FRAME_NUM (PHYSICAL_SIZE/PAGE_SIZE) //change
 // #define NUM_PROCESSES 3
 
+int allocatedPage();
+void deallocatePage(int page_number);
+
 int next_available_address = 0;
 int total_virtual_memory_used = 0;
 
@@ -32,5 +35,19 @@ void deallocatePage(int page_number) {
 
 int randomMemoryAddress(){
     // Generate a random integer within the virtual memory range
-    return rand() % VIRTUAL_MEMORY_SIZE;
+    return rand() % VIRTUAL_SIZE;
+}
+
+int main(){
+    // int random = randomMemoryAddress();
+    printf("%d \n", next_available_address);
+    printf("%d \n", total_virtual_memory_used);
+    int allo = allocatePage();
+    printf("%d \n", next_available_address);
+    printf("%d \n", total_virtual_memory_used);
+    printf("%d \n", allo);
+    deallocatePage(allo);
+    printf("%d \n", next_available_address);
+    printf("%d \n", total_virtual_memory_used);
+    return 0;
 }
