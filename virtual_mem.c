@@ -58,7 +58,11 @@ int randomMemoryAddress(){
 
 // only considers contiguous page allocation, try to implement non-contiguous if we can 
 int allocatePage(Process process) { // is run on process pages to allocate page
-    int num_of_pages = ceil(process.size/PAGE_SIZE); // number of pages needed   
+    double size = process.size;
+    // int num_of_p = ceil(size/PAGE_SIZE);
+    // printf("%d", num_of_p); FIGURE THE ROUNDING UP OUT 
+    int num_of_pages = ceil(process.size/PAGE_SIZE); // number of pages needed 
+    
 
     if(num_of_pages > num_free){ // no free pages available
         printf("Memory allocation for process with PID %d failed.\n", process.pid);
@@ -105,9 +109,9 @@ int main(){
     Process p1;
     p1.pid = 3456;
     p1.memory_address = randomMemoryAddress();
-    p1.size = 8198;
+    p1.size = 10198;
     allocatePage(p1);
-    printf("%d \n", p1.memory_address);
+    // printf("%d \n", p1.memory_address);
     int randomAd = randomMemoryAddress();
     // int random = randomMemoryAddress();
     // printf("%d \n", randomAd);
@@ -115,14 +119,14 @@ int main(){
     // printf("%d \n", total_virtual_memory_used);
     // int allo = allocatePage();
     // printf("%d \n", next_available_address);
-    for(int i=0; i<PAGE_NUM; i++){
-        printf("%d", page_status[i]);
-    }
+    // for(int i=0; i<PAGE_NUM; i++){
+    //     printf("%d", page_status[i]);
+    // }
 
     deallocatePage(p1);
-    for(int i=0; i<PAGE_NUM; i++){
-        printf("%d", page_status[i]);
-    }
+    // for(int i=0; i<PAGE_NUM; i++){
+    //     printf("%d", page_status[i]);
+    // }
 
     // printf("%d \n", total_virtual_memory_used);
     // printf("%d \n", allo);
