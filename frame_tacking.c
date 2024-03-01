@@ -41,4 +41,9 @@ int allocateFrame(int virtual_address){
     // track all the other things 
 }
 
-// deallocate frames when we dont need them
+int deallocateFrame(int physical_address){
+    // calculate frame number 
+    // change frame  status
+    // change the physical memory used 
+    // change number of free and allocated 
+}
