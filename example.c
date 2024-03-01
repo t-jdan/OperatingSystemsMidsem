@@ -11,20 +11,21 @@
 #define PAGE_NUM (VIRTUAL_SIZE/PAGE_SIZE) //change
 #define FRAME_NUM (PHYSICAL_SIZE/PAGE_SIZE) //change
 
-// creating first-level page entry
-typedef struct {
-    int* second_level_page_table; // a pointer to the second level page entry
-} FirstLevelEntry;
 
 // creating second-level page entry
 typedef struct {
-    int frame_number; // physical memory address
+    int frameNumber; // physical memory address
     bool valid; // stores valid and invalid bits
 } SecondLevelEntry;
 
-// SecondLevelEntry* page_table = (SecondLevelEntry*)malloc(num_of_pages * sizeof(SecondLevelEntry));
+// creating first-level page entry
+typedef struct {
+    SecondLevelEntry second_level_page_table[PAGE_NUM];; // a pointer to the second level page entry
+} FirstLevelEntry;
 
-// create representation of physical memory frame 
+
+
+
 typedef struct {
     char data[PAGE_SIZE];  // array of size PAGE_SIZE to represent each frame 
 } PhysicalMemoryFrame;
@@ -36,17 +37,24 @@ PhysicalMemoryFrame physical_memory[FRAME_NUM];
 bool frame_status[FRAME_NUM];
 
 // function definitions
-int translateVirtualToPhysical(int virtual_address, int process_id, FirstLevelEntry* first_level_page_table);
+int translateVirtualToPhysical(int virtual_address, FirstLevelEntry* first_level_page_table);
 void initializePageTables(FirstLevelEntry* first_level_page_table);
 void initializeFrameStatus();
 
 
-// initialize entries in the first level page table 
-void initializePageTables(FirstLevelEntry* first_level_page_table) { //takes a pointer to the first level entry array
+
+void initializePageTables(FirstLevelEntry* first_level_page_table) {
     for (int i = 0; i < PAGE_NUM; ++i) {
-        first_level_page_table[i].second_level_page_table = NULL; // initializes each pointer to NULL since no page table has been created 
+        // No need to allocate memory, it's already part of the structure
+
+        // Initializes each entry in the second_level_page_table
+        for (int j = 0; j < PAGE_NUM; ++j) {
+            first_level_page_table[i].second_level_page_table[j].frameNumber = -1;  // Set a default invalid value
+            first_level_page_table[i].second_level_page_table[j].valid = false;    // Set validity to false
+        }
     }
 }
+
 
 void initializeFrameStatus(){
     for(int i=0; i < FRAME_NUM; i++){
@@ -54,30 +62,54 @@ void initializeFrameStatus(){
     }
 }
 
+
+
 // idk i think we need to change this to only a calculation 
-int translateVirtualToPhysical(int virtual_address, int process_id, FirstLevelEntry* first_level_page_table) {
-    int virtual_page_number = virtual_address / PAGE_SIZE; //index of  page 
-
-    // Check if the page table is allocated for the process
-    if (first_level_page_table[process_id].second_level_page_table != NULL) {
-        // Get the frame number from the second-level page table
-        int frame_number = first_level_page_table[process_id].second_level_page_table[virtual_page_number];
-
-        // Check if the frame is valid
-        if (frame_status[frame_number]) { // if frame is allocated 
-            int offset = virtual_address % PAGE_SIZE;
-            int physical_address = frame_number * PAGE_SIZE + offset;
-            return physical_address;
-        }
+int translateVirtualToPhysical(int virtualAddress, FirstLevelEntry* pageTable) {
+    int firstLevelIndex = (virtualAddress >> 22) & 0x3FF;
+    int secondLevelIndex = (virtualAddress >> 12) & 0x3FF;
+    int offset = virtualAddress & 0xFFF;
+    if (pageTable[firstLevelIndex].second_level_page_table == NULL) {
+        printf("Page Fault: Second-level page table not initialized.\n");
+        return -1;
     }
+    int frameNumber = pageTable[firstLevelIndex].second_level_page_table[secondLevelIndex].frameNumber;
 
-    printf("Page fault for virtual address %d in process %d\n", virtual_address, process_id);
-    return -1;
+    // Check if the frame number is valid
+    if (frameNumber == -1) {
+        printf("Page Fault: Page not in physical memory.\n");
+        return -1;
+    }
+    int physicalAddress = (frameNumber << 12) | offset;
+
+    return physicalAddress;
 }
 
 
+
+
+
+
+
+
 int main(){
-    printf("%d", (int)sizeof(workloadOne));
+    //printf("%d", (int)sizeof(workloadOne));
+
+
+    FirstLevelEntry* pageTable = (FirstLevelEntry*)malloc(PAGE_NUM * sizeof(FirstLevelEntry));
+    FirstLevelEntry* pageTable = (FirstLevelEntry*)malloc(PAGE_NUM * sizeof(FirstLevelEntry));
+    int virtualAddress = 0x12345678;
+    int physicalAddress = translateVirtualToPhysical(virtualAddress, pageTable);
+
+    if (physicalAddress != -1) {
+        printf("Virtual Address: 0x%08X\n", virtualAddress);
+        printf("Physical Address: 0x%08X\n", physicalAddress);
+    }
+
+    initializePageTables(pageTable);
+     free(pageTable);
+
+
     // right now  i want to test that for a process i am able to divide it into pages and allocate 
     // also track statistics 
 
@@ -123,42 +155,3 @@ int main(){
 // FirstLevelEntry* first_level_page_table = (FirstLevelEntry*)malloc(PAGE_NUM * sizeof(FirstLevelEntry));
 // using static function until i hve to initialize in main. main initialization is above
 // FirstLevelEntry first_level_page_table[PAGE_NUM] = {0};
-
-int translateTest(int process_id, FirstLevelEntry *first_level_page_table) {
-    // Allocate pages in the first-level page table and initialize and assign frame numbers in page table
-    for (int i = 0; i < PAGE_NUM; ++i) { 
-        if (first_level_page_table[0].second_level_page_table == NULL) {
-            first_level_page_table[0].second_level_page_table = (int *)malloc(PAGE_NUM * sizeof(int)); // allocate space for page table
-
-            for (int j = 0; j < PAGE_NUM; ++j) {
-                first_level_page_table[0].second_level_page_table[j] = -1; // initiate each index in the page table 
-            }
-
-            // Allocate frames for the process
-            for (int j = 0; j < FRAME_NUM; ++j) {
-                if (!frame_status[j]) { // if frame is not allocated 
-                    frame_status[j] = true; // allocate frame 
-                    first_level_page_table[0].second_level_page_table[j] = j; // put address for frame in page table 
-                }
-            }
-
-            break; // Break once pages are allocated
-        }
-    }
-
-    // Access data using a virtual address
-    int virtual_address =  process_id * PAGE_SIZE;
-    int physical_address = translateVirtualToPhysical(virtual_address, 0, first_level_page_table);
-
-    // if physical address is valid 
-    if (physical_address != -1) {
-        char data = physical_memory[physical_address / PAGE_SIZE].data[physical_address % PAGE_SIZE];
-        printf("Data at virtual address %d in process %d is %d\n", virtual_address, 0, data);
-    }
-
-    // free page table 
-    free(first_level_page_table[process_id].second_level_page_table);
-    first_level_page_table[process_id].second_level_page_table = NULL;
-
-    return 0;
-}
