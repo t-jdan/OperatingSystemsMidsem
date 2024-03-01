@@ -55,7 +55,7 @@ int randomMemoryAddress(){
 
     return randomMemory;
 }
-
+ 
 // only considers contiguous page allocation, try to implement non-contiguous if we can 
 int allocatePage(Process process) { // is run on process pages to allocate page
     double size = process.size;
