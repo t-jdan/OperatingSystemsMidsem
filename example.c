@@ -10,7 +10,6 @@
 #define PAGE_SIZE 4096 //4kb
 #define PAGE_NUM (VIRTUAL_SIZE/PAGE_SIZE) //change
 #define FRAME_NUM (PHYSICAL_SIZE/PAGE_SIZE) //change
-#define NUM_PROCESSES 3
 
 // creating first-level page entry
 typedef struct {
@@ -22,6 +21,8 @@ typedef struct {
     int frame_number; // physical memory address
     bool valid; // stores valid and invalid bits
 } SecondLevelEntry;
+
+// SecondLevelEntry* page_table = (SecondLevelEntry*)malloc(num_of_pages * sizeof(SecondLevelEntry));
 
 // create representation of physical memory frame 
 typedef struct {
@@ -72,70 +73,6 @@ int translateVirtualToPhysical(int virtual_address, int process_id, FirstLevelEn
 
     printf("Page fault for virtual address %d in process %d\n", virtual_address, process_id);
     return -1;
-}
-
-int workloadOne(int rows, int cols){
-    // define matrix 
-    int **matrix;
-    // int matrix[rows][cols];
-    matrix = (int **)malloc(rows * sizeof(int *));
-
-    if (matrix == NULL) {
-        fprintf(stderr, "Memory allocation failed for matrix rows.\n");
-        return -1;  // Return an error code
-    }
-
-        // Dynamically allocate memory for each row of the matrix
-    for (int i = 0; i < rows; i++) {
-        matrix[i] = (int *)malloc(cols * sizeof(int));
-        if (matrix[i] == NULL) {
-            fprintf(stderr, "Memory allocation failed for matrix columns.\n");
-
-            // Free previously allocated memory to avoid memory leaks
-            for (int j = 0; j < i; j++) {
-                free(matrix[j]);
-            }
-            free(matrix);
-
-            return -1;  // Return an error code
-        }
-    }
-    
-    // Initialize the matrix with some random values
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            int random = rand()  % 11;
-            matrix[i][j] = i * random + j ;
-        }
-    }
-
-    // Print the matrix
-    printf("Matrix:\n");
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            printf("%d\t", matrix[i][j]);
-        }
-        printf("\n");
-    }
-
-    int rand_sum = 0;
-
-    // calculate and sum row/2 of elements in the matrix
-    for(int i=0; i < rows/2 ; i++){
-        int row_rand =  rand() % rows;
-        int col_rand  = rand() % cols;
-        rand_sum += matrix[row_rand][col_rand];
-    }
-
-    printf("The sum of %d random numbers in the array is %d \n", rows/2, rand_sum);
-
-    // Free dynamically allocated memory
-    for (int i = 0; i < rows; i++) {
-        free(matrix[i]);
-    }
-    free(matrix);
-
-    return 0;
 }
 
 
