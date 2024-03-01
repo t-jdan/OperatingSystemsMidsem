@@ -4,6 +4,11 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+typedef struct {
+    int pid;
+    int memory_address;
+    int size; // can choose to randomly generate or not
+} Process;
 
 #define PHYSICAL_SIZE 32768 //change
 #define VIRTUAL_SIZE 49152 //used to track the allocation of processes to virtual memory
@@ -22,8 +27,6 @@ typedef struct {
 typedef struct {
     SecondLevelEntry second_level_page_table[PAGE_NUM];; // a pointer to the second level page entry
 } FirstLevelEntry;
-
-
 
 
 typedef struct {
@@ -62,8 +65,6 @@ void initializeFrameStatus(){
     }
 }
 
-
-
 // idk i think we need to change this to only a calculation 
 int translateVirtualToPhysical(int virtualAddress, FirstLevelEntry* pageTable) {
     int firstLevelIndex = (virtualAddress >> 22) & 0x3FF;
@@ -96,18 +97,18 @@ int main(){
     //printf("%d", (int)sizeof(workloadOne));
 
 
-    FirstLevelEntry* pageTable = (FirstLevelEntry*)malloc(PAGE_NUM * sizeof(FirstLevelEntry));
-    FirstLevelEntry* pageTable = (FirstLevelEntry*)malloc(PAGE_NUM * sizeof(FirstLevelEntry));
-    int virtualAddress = 0x12345678;
-    int physicalAddress = translateVirtualToPhysical(virtualAddress, pageTable);
+    // FirstLevelEntry* pageTable = (FirstLevelEntry*)malloc(PAGE_NUM * sizeof(FirstLevelEntry));
+    // FirstLevelEntry* pageTable = (FirstLevelEntry*)malloc(PAGE_NUM * sizeof(FirstLevelEntry));
+    // int virtualAddress = 0x12345678;
+    // int physicalAddress = translateVirtualToPhysical(virtualAddress, pageTable);
 
-    if (physicalAddress != -1) {
-        printf("Virtual Address: 0x%08X\n", virtualAddress);
-        printf("Physical Address: 0x%08X\n", physicalAddress);
-    }
+    // if (physicalAddress != -1) {
+    //     printf("Virtual Address: 0x%08X\n", virtualAddress);
+    //     printf("Physical Address: 0x%08X\n", physicalAddress);
+    // }
 
-    initializePageTables(pageTable);
-     free(pageTable);
+    // initializePageTables(pageTable);
+    //  free(pageTable);
 
 
     // right now  i want to test that for a process i am able to divide it into pages and allocate 

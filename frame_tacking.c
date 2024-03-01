@@ -58,7 +58,6 @@ void initializeFrameStatus(){
 }
 
 
-
 int translateVirtualToPhysical(int virtualAddress, FirstLevelEntry* pageTable) {
     // Extract indices from the virtual address
     int firstLevelIndex = (virtualAddress >> 22) & 0x3FF;
@@ -99,9 +98,6 @@ int allocateFrame(int virtual_address, FirstLevelEntry* pageTable){
 
     return frame_number;
 }
-
-
-
 
 int deallocateFrame(int frame_number){
     if (!frame_status[frame_number]) {
