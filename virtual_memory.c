@@ -22,9 +22,7 @@ void deallocatePage(Process process);
 int next_available_address = 0;
 int total_virtual_memory_used = 0;
 int num_allocated = 0;
-int num_free =  PAGE_NUM;
-
-
+int num_free = PAGE_NUM;
 
 bool page_status[PAGE_NUM];
 
