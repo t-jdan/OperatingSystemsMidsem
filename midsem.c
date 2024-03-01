@@ -14,28 +14,6 @@
 
 
 
-
-
-
-// typedef struct{
-//     int address; //address for physical memory
-//     int offset; //offset for physical memory
-// } PageTableItem;
-// PageTableItem* page_table;
-// char** physical_memory;
-
-typedef struct {
-    int frameNumber;
-    bool valid;
-} PageTableEntry;
-
-// Page Table Structure
-typedef struct {
-    PageTableEntry entries[PAGE_NUM];
-} PageTable;
-
-
-
 // TLB Entry Structure
 typedef struct {
     int virtualPageNumber;

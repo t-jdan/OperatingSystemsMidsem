@@ -14,8 +14,14 @@ typedef struct {
 } Process;
 
 
+// FIFO takes struct process 
+// when a page is coming to run and the virtual memory is full
+// handle page fault 
+// else continue as usual 
+// remember to add Process to fifo queue 
+
 bool page_status[PAGE_NUM];
-int next_available_address = 0;
+// int next_available_address = 0;
 int num_free = PAGE_NUM;
 int fifo_queue[PAGE_NUM];
 int front = 0;
@@ -26,12 +32,13 @@ int allocate_page(Process process);
 void deallocate_page(Process process);
 int handle_page_fault(Process process);
 
-void initialize_memory() {
+void initializePageStatus() {
     for (int i = 0; i < PAGE_NUM; i++) {
         page_status[i] = false;
     }
 }
 
+// inserts data into FIFO
 void insert(int data) {
     if (itemCount < PAGE_NUM) {
         if (rear == PAGE_NUM - 1) {
@@ -42,6 +49,7 @@ void insert(int data) {
     }
 }
 
+// removed data from FIFO
 int removeData() {
     int data = fifo_queue[front++];
     if (front == PAGE_NUM) {
@@ -85,20 +93,23 @@ int allocate_page(Process process) {
     int num_of_pages = ceil(process.size / (double)PAGE_SIZE);
 
     if (num_of_pages > num_free) {
-        printf("Not enough free pages to allocate for process with PID %d.\n", process.pid);
-        return handle_page_fault(process);
+        // printf("Not enough free pages to allocate for process with PID %d.\n", process.pid);
+        return handle_page_fault(process); // dont return
     }
+
+    int expected_page = process.memory_address/PAGE_SIZE;
 
     // Allocate pages for the new process
     for (int i = 0; i < num_of_pages; i++) {
-        int allocated_page = next_available_address / PAGE_SIZE;
-        page_status[allocated_page] = true;
-        next_available_address += PAGE_SIZE;
-        num_free--;
+        page_status[expected_page+i] = true;
+        total_virtual_memory_used += PAGE_SIZE; // update total memory used 
+        num_free -= 1;
+        num_allocated += 1;
     }
 
     // Enqueue the PID of the new process into the FIFO queue
-    insert(process.pid);
+    insert(process.pid); // whether we are handling oage faults or not has to go
+    // 
 
     return 0;
 }
